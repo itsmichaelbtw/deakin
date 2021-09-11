@@ -6,7 +6,8 @@
                     <img :src="image" class="navbar-logo"/>
                 </div>
 
-                <div class="navbar-item">
+                <div class="navbar-item desktop">
+                    
                     <div class="navbar-links">
                         <p class="navbar-link">About</p>
                         <p class="navbar-link active">Search</p>
@@ -15,7 +16,29 @@
                             <img src="https://avatar.reflyui.cc/avatar.png?name=John&background=26A96C" class="profile-img"/>
                             Profile
                         </p>
-                    </div>            
+                    </div>  
+                    
+                </div>
+
+                <div class="navbar-item mobile">
+                    
+                    <div style="postition: relative">
+                        <div class="navbar-menu" v-on:click="Menu">
+                            <div class="menu-line"/>
+                            <div class="menu-line"/>
+                            <div class="menu-line"/>
+                        </div>
+                        
+                        <div v-if="isMenuOpened" class="mobile-menu">
+                            <p class="navbar-link">About</p>
+                            <p class="navbar-link active">Search</p>
+                            <p class="navbar-link">Contact</p>
+                            <p class="navbar-link profile-link" style="margin: 0 !important">
+                                <img src="https://avatar.reflyui.cc/avatar.png?name=John&background=26A96C" class="profile-img"/>
+                                Profile
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -28,7 +51,13 @@
     export default {
         data: function() {
             return {
-                image: Logo
+                image: Logo,
+                isMenuOpened: false,
+            }
+        },
+        methods: {
+            Menu: function() {
+                this.isMenuOpened = !this.isMenuOpened;
             }
         }
     }
@@ -65,6 +94,15 @@
     .navbar-content > .navbar-item:last-child {
         display: flex;
         align-items: center;
+    }
+
+    .navbar-item.mobile {
+        display: none !important;
+        justify-content: flex-end;
+    }
+
+    .navbar-item.desktop {
+        display: flex;
     }
 
     .navbar-item > .navbar-logo {
@@ -106,5 +144,47 @@
         margin-right: 4px;
         border-radius: 50%;
         object-fit: cover;
+    }
+
+    .navbar-menu {
+        width: 30px;
+        position: relative;
+        cursor: pointer;
+    }
+
+    .navbar-menu > .menu-line {
+        width: 100%;
+        height: 3px;
+        border-radius: 2px;
+        background: white;
+        margin: 4px 0;
+    }
+
+    .mobile-menu {
+        position: absolute;
+        right: 0;
+        width: 150px;
+        z-index: 100;
+        top: 40px;
+        padding: 10px;
+        background: white;
+        box-shadow: 0px 0px 10px -3px rgba(0,0,0,1);
+        color: black
+    }
+
+    .mobile-menu > p {
+        margin-bottom: 6px;
+        cursor: pointer;
+        font-size: 18px;
+    }
+
+    @media screen and (max-width: 720px) {
+        .navbar-item.desktop {
+            display: none !important;
+        }
+
+        .navbar-item.mobile {
+            display: flex !important;
+        }
     }
 </style>

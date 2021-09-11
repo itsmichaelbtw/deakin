@@ -9,11 +9,13 @@
                 <div class="search-wrap">
                     <input type="text" placeholder="Search">
                     <div class="search-button" v-on:click="Search">Find</div>
+                    
                 </div>
             </div>
         </div>
 
         <div class="search-results">
+            <div style="width: 100%;max-width: 1200px;margin: 0 auto" v-if="location">Results based on your geolocation: {{ location.coords.latitude }} {{ location.coords.longitude }}</div>
             <div class="search-results-align">
                 <Result v-for="result in results" :key="result.id" :room="result.room" :image="result.image" :duration="result.duration" :host="result.host"/>
             </div>
@@ -70,13 +72,21 @@
                         duration: "64m 42s",
                         host: "Jane",
                     }
-                ]
+                ],
+                location: null
             }
         },
         methods: {
             Search: function() {
                 
             },
+        },
+        beforeMount: function() {
+            if ("geolocation" in navigator) {
+                navigator.geolocation.getCurrentPosition(position => {
+                    this.location = position
+                })
+            }
         },
         components: {
             Result
@@ -177,5 +187,23 @@
         columns: 5;
         justify-items: center;
         row-gap: 5px;
+    }
+
+    @media screen and (max-width: 1200px) {
+        .search-results-align {
+            grid-template-areas: "result result result";
+        }
+    }
+
+    @media screen and (max-width: 915px) {
+        .search-results-align {
+            grid-template-areas: "result result";
+        }
+    }
+
+    @media screen and (max-width: 630px) {
+        .search-results-align {
+            grid-template-areas: "result";
+        }
     }
 </style>
