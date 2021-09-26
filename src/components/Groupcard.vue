@@ -1,4 +1,6 @@
 <template>
+    <!-- dynamic link is binded to url prop passed from parent -->
+
     <router-link :to="url">
         <div class="result-block">
             <div class="result-image">
@@ -13,6 +15,8 @@
 </template>
 
 <script>
+    // declare the props being passed through the component
+
     export default {
         props: ["id", "name", "duration", "environment", "banner", "link", "url"]
     }

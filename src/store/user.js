@@ -3,12 +3,20 @@ const cvs = {
 };
 
 export default {
+    // default state
+
     state: {
         account: {}
     },
+
+    // getter functions to retrieve data
+
     getters: {
         account: state => state.account
     },
+
+    // mutation state
+
     mutations: {
         addSession: (state, data) => {
             state.account = data;
@@ -17,6 +25,9 @@ export default {
             state.account = {}
         }
     },
+
+    // global actions for other files to use
+
     actions: {
         LOGIN: (_, payload) => {
             return new Promise((resolve) => {

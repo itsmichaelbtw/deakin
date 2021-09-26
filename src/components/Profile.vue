@@ -14,6 +14,9 @@
 
                     <div class="profile-column right">
                         <h1>Your rooms</h1>
+
+                        <!-- loop over the rooms if they have them -->
+
                         <div v-if="rooms.length" class="room-list">
                             <router-link :to=" room.url " v-for="room in rooms" v-bind:key="room.id">
                                 <div class="room">
@@ -54,13 +57,19 @@
             }
         },
         beforeMount: function() {
+            // if they are not logged in redirect
+
             if (!this.$store.getters.account.isLoggedIn) {
-                return this.$router.push("/");
+                return this.$router.push("/login");
             }
+
+            // randomize a banner for the profile
 
             let banners = [Banner1, Banner2, Banner3, Banner4];
 
             this.banner = banners[Math.floor(Math.random() * banners.length)];
+
+            // get the acfount and room data from vuex
 
             this.account = this.$store.getters.account;
             this.rooms = this.$store.getters.rooms;

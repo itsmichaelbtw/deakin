@@ -4,6 +4,8 @@
             <div class="auth-box">
                 <h1>Login</h1>
                 <div class="auth-input">
+                    <!-- bind the v-model to the data value -->
+
                     <label>Email</label>
                     <input placeholder="Click to edit" v-model="email"/>
                 </div>
@@ -29,6 +31,9 @@ export default {
             isLoading: false
         }
     },
+
+    // if they are logged in they dont need to see this page if they visit it
+
     beforeMount: function() {
         if (this.$store.getters.account.isLoggedIn) {
             this.$router.push("/");
@@ -38,6 +43,8 @@ export default {
         login: async function () {
             if (this.email && this.password) {
                 this.isLoading = true;
+
+                // login user and dispatch a login event to vuex
 
                 await this.$store.dispatch("LOGIN", {
                     email: this.email,

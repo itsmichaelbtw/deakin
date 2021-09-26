@@ -1,8 +1,14 @@
 <template>
     <div class="main">
         <div class="align">
+
+            <!-- show an alert after the user has sent an enquiry -->
+
             <div class="alert" v-if="showAlert">Your enquiry has been sent!</div>
             <div class="contact-box">
+
+                <!-- v-model is binded to the data value -->
+
                 <h1>Contact Us</h1>
                 <div class="contact-input">
                     <label>First name</label>
@@ -37,15 +43,23 @@ export default {
         }
     },
     methods: {
+
+        // send function
+
         send: async function() {
             if (this.name && this.email && this.enquiry) {
                 this.isLoading = true;
+
+                // create a "fake request" with a promise
+                // from the ui it shows the form loading them stops
 
                 await new Promise((resolve) => {
                     setTimeout(function(){
                         resolve();
                     }, 750);
                 });
+
+                // reset the form
 
                 this.name = "";
                 this.email = "";

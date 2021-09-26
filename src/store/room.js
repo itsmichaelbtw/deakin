@@ -4,6 +4,8 @@ import Banner3 from "../assets/banner_3.png";
 import Banner4 from "../assets/banner_4.png";
 
 export default {
+    // declare a default state
+
     state: {
         publicRooms: [
             {
@@ -54,22 +56,37 @@ export default {
         ],
         rooms: []
     },
+
+    // functions to return certain data
+
     getters: {
         rooms: state => state.rooms,
         publicRooms: state => state.publicRooms
     },
+
+    // mutations to modify data
+
     mutations: {
         addRoom: (state, data) => {
             state.rooms.push(data);
         }
     },
+
+    // global actions we can call within other files to mutate data
+
     actions: {
         CREATEROOM: (_, payload) => {
+            // create a fake request
+
             return new Promise((resolve) => {
                 setTimeout(function() {
 
+                    // grab a random banner
+
                     let banners = [Banner1, Banner2, Banner3, Banner4];
                     let banner = banners[Math.floor(Math.random() * banners.length)];
+
+                    // create id based on data
 
                     let id = Date.now()
 
@@ -82,6 +99,8 @@ export default {
                         link: payload.link,
                         url: "/view-room/" + id
                     }
+
+                    // mutate the state and return the id
 
                     _.commit("addRoom", data);
 

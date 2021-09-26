@@ -33,20 +33,32 @@
             }
         },
         beforeMount: function() {
+            // get the room from the params id
+
             let [ room ] = this.$store.getters.rooms.filter(a => a.id == this.$route.params.id);
+
+            // set room if there is one
 
             if (room) {
                 return this.room = room;
             }
 
+            // also check the public rooms list
+
             let [ publicRoom ] = this.$store.getters.publicRooms.filter(a => a.id == this.$route.params.id);
+
+            // set room if there is one
 
             if (publicRoom) {
                 return this.room = publicRoom;
             }
 
+            // redirect to /search page if no rooms are found
+
             this.$router.push("/search");
         },
+        // declare the props for this page
+
         props: ["id"]
     }
 </script>

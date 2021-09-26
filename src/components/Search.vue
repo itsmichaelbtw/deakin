@@ -17,6 +17,10 @@
         <div class="search-results">
             <div style="width: 100%;max-width: 1200px;margin: 0 auto" v-if="location">Results based on your geolocation: {{ location.coords.latitude }} {{ location.coords.longitude }}</div>
             <div class="search-results-align">
+
+                <!-- reusable component to render the results in a lost -->
+                <!-- pass through the needed values as props and bind them to the component -->
+
                 <Result v-for="room in results" :key="room.id" :id="room.id" :name="room.name" :duration="room.duration" :environment="room.environment" :banner="room.banner" :link="room.link" :url="room.url"/>
                 <Result v-for="room in rooms" :key="room.id" :id="room.id" :name="room.name" :duration="room.duration" :environment="room.environment" :banner="room.banner" :link="room.link" :url="room.url"/>
             </div>
@@ -41,6 +45,8 @@
             },
         },
         beforeMount: function() {
+            // get the users location
+
             if ("geolocation" in navigator) {
                 navigator.geolocation.getCurrentPosition(position => {
                     this.location = position

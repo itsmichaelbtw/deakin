@@ -9,6 +9,8 @@
                         <router-link class="navbar-link" to="/search">Search</router-link>
                         <router-link class="navbar-link" to="/contact">Contact</router-link>
 
+                        <!-- if the user is logged in show their profile else show login/register -->
+
                         <router-link v-if="account && account.isLoggedIn" class="navbar-link profile-link" to="/profile" >
                             <img :src="account && account.avatar" class="profile-img"/>
                             Profile
@@ -22,6 +24,8 @@
 
                 <div class="navbar-item mobile">
                     <div style="position: relative">
+                        <!-- toggle menu if it is clicked on -->
+
                         <div class="navbar-menu" v-on:click="Menu">
                             <div class="menu-line"/>
                             <div class="menu-line"/>
@@ -61,6 +65,8 @@
         },
         beforeMount: function(){
             const that = this;
+
+            // watch the store for updates so the nav can rerender if the user logs in to show the profile
 
             this.$store.watch(function(state) {
                 return state.account

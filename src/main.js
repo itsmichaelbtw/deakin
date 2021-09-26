@@ -1,8 +1,12 @@
+// declare libs
+
 import Vue from "vue";
 import VueRouter from "vue-router";
 
 import App from "./App.vue";
 import Store from "./store/store";
+
+// delcare custom comps
 
 import Main from "./components/Main";
 import Login from "./components/Login";
@@ -12,10 +16,17 @@ import Contact from "./components/Contact";
 import Profile from "./components/Profile"
 import CreateRoom from "./components/CreateRoom";
 
+// import css
+
 import "./assets/main.css";
 
 Vue.config.productionTip = false;
+
+// tell vue to use the vuerouter lib
+
 Vue.use(VueRouter);
+
+// create an array of all urls my application uses and what component to use
 
 const routes = [
       {
@@ -46,6 +57,9 @@ const routes = [
             path: "/create-room",
             component: CreateRoom
       },
+
+      // dynamic links with a lazy load import
+
       {
             name: "view-room",
             path: "/view-room/:id",
@@ -54,11 +68,15 @@ const routes = [
       }
 ];
 
+// create the router and pass through the routes
+
 const Router = new VueRouter({
       mode: "history",
-      routes: routes,
+      routes: routes, 
       base: "/"
 });
+
+// start the vue application
 
 new Vue({
       router: Router,

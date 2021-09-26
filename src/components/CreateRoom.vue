@@ -47,6 +47,9 @@ export default {
         }
     },
     beforeMount: function() {
+        // access the vuex store and check if the user is not logged in
+        // if they are not redirect to login as this page is only accessed by authorized users
+
         if (!this.$store.getters.account.isLoggedIn) {
             this.$router.push("/login");
         }
@@ -56,12 +59,16 @@ export default {
             if (this.name && this.environment && this.duration && this.link) {
                 this.isLoading = true;
 
+                // dispatch a create room event to the vuex store and create a new room
+
                 const id = await this.$store.dispatch("CREATEROOM", {
                     name: this.name,
                     environment: this.environment,
                     duration: this.duration,
                     link: this.link
                 });
+
+                // redirect user to the room
 
                 this.$router.push("/view-room/" + id);
             }
