@@ -17,7 +17,8 @@
         <div class="search-results">
             <div style="width: 100%;max-width: 1200px;margin: 0 auto" v-if="location">Results based on your geolocation: {{ location.coords.latitude }} {{ location.coords.longitude }}</div>
             <div class="search-results-align">
-                <Result v-for="result in results" :key="result.id" :room="result.room" :image="result.image" :duration="result.duration" :host="result.host"/>
+                <Result v-for="room in results" :key="room.id" :id="room.id" :name="room.name" :duration="room.duration" :environment="room.environment" :banner="room.banner" :link="room.link" :url="room.url"/>
+                <Result v-for="room in rooms" :key="room.id" :id="room.id" :name="room.name" :duration="room.duration" :environment="room.environment" :banner="room.banner" :link="room.link" :url="room.url"/>
             </div>
         </div>
     </div>
@@ -29,50 +30,8 @@
     export default {
         data: function() {
             return {
-                results: [
-                    {
-                        id: "1",
-                        image: "http://wallpoper.com/images/00/29/00/25/forest_00290025.jpg",
-                        room: "Forest Wall",
-                        duration: "32m 5s",
-                        host: "Holiday",
-                    },
-                    {
-                        id: "2",
-                        image: "https://images2.minutemediacdn.com/image/upload/c_fill,g_auto,h_1248,w_2220/f_auto,q_auto,w_1100/v1555306493/shape/mentalfloss/istock_61523256_smallprimary.png",
-                        room: "Ice Cold",
-                        duration: "18m 23s",
-                        host: "Serena",
-                    },
-                    {
-                        id: "3",
-                        image: "https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2F3.bp.blogspot.com%2F-8hSg85P6M6Q%2FUaWs4wV4QxI%2FAAAAAAAAHwc%2FmMIeD8QmeK0%2Fs1600%2Frain_or_snow_snow_winter_white-hd-wallpaper-473957.jpg&f=1&nofb=1",
-                        room: "Raining Times",
-                        duration: "1m 12s",
-                        host: "Eliza",
-                    },
-                    {
-                        id: "4",
-                        image: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.rSPxhnL1lRdPrFfvrRisUAHaEo%26pid%3DApi&f=1",
-                        room: "Windy Tunnel",
-                        duration: "84m 12s",
-                        host: "Keith",
-                    },
-                    {
-                        id: "5",
-                        image: "https://miro.medium.com/max/12000/1*XsB0hYw21r-OUlpj2jttWw.jpeg",
-                        room: "Soul",
-                        duration: "12m 23s",
-                        host: "Mac",
-                    },
-                    {
-                        id: "6",
-                        image: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.b_jZf03iDkoEJGoud1g04AHaEK%26pid%3DApi&f=1",
-                        room: "Sprout",
-                        duration: "64m 42s",
-                        host: "Jane",
-                    }
-                ],
+                results: this.$store.getters.publicRooms,
+                rooms: this.$store.getters.rooms,
                 location: null
             }
         },
@@ -97,6 +56,8 @@
 <style scoped>
     .main {
         position: relative;
+        display: flex;
+        flex-direction: column;
     }
 
     .search-container {
@@ -145,7 +106,6 @@
         background: #26A96C;
         color: white;
         padding: 4px 8px;
-        border-radius: 4px;
         cursor: pointer;
     }
 
@@ -153,8 +113,7 @@
         width: 100%;
         padding: 8px 14px;
         padding-right: 64px;
-        border: 1px solid rgba(0, 0, 0, 0.3);
-        border-radius: 4px;
+        border: 1px solid rgba(0, 0, 0, 0.4);
         outline: 0;
 
         font-size: 18px;

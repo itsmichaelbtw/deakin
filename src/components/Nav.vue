@@ -2,27 +2,26 @@
     <div class="navbar">
         <div class="navbar-alignment">
             <div class="navbar-content">
-                <div class="navbar-item">
-                    <img :src="image" class="navbar-logo"/>
-                </div>
-
                 <div class="navbar-item desktop">
                     
                     <div class="navbar-links">
-                        <p class="navbar-link">About</p>
-                        <p class="navbar-link active">Search</p>
-                        <p class="navbar-link">Contact</p>
-                        <p class="navbar-link profile-link">
-                            <img src="https://avatar.reflyui.cc/avatar.png?name=John&background=26A96C" class="profile-img"/>
+                        <router-link class="navbar-link" to="/">Home</router-link>
+                        <router-link class="navbar-link" to="/search">Search</router-link>
+                        <router-link class="navbar-link" to="/contact">Contact</router-link>
+
+                        <router-link v-if="account && account.isLoggedIn" class="navbar-link profile-link" to="/profile" >
+                            <img :src="account && account.avatar" class="profile-img"/>
                             Profile
-                        </p>
-                    </div>  
-                    
+                        </router-link>
+                        <span v-else>
+                            <router-link class="navbar-link" to="/login" style="display: inline-block;height: 100%">Login</router-link>
+                            <router-link class="navbar-link" to="/register" style="display: inline-block;height: 100%">Register</router-link>
+                        </span>
+                    </div>
                 </div>
 
                 <div class="navbar-item mobile">
-                    
-                    <div style="postition: relative">
+                    <div style="position: relative">
                         <div class="navbar-menu" v-on:click="Menu">
                             <div class="menu-line"/>
                             <div class="menu-line"/>
@@ -30,13 +29,17 @@
                         </div>
                         
                         <div v-if="isMenuOpened" class="mobile-menu">
-                            <p class="navbar-link">About</p>
-                            <p class="navbar-link active">Search</p>
-                            <p class="navbar-link">Contact</p>
-                            <p class="navbar-link profile-link" style="margin: 0 !important">
-                                <img src="https://avatar.reflyui.cc/avatar.png?name=John&background=26A96C" class="profile-img"/>
+                            <router-link class="navbar-link" to="/">Home</router-link>
+                            <router-link class="navbar-link" to="/search">Search</router-link>
+                            <router-link class="navbar-link" to="/contact">Contact</router-link>
+                            <router-link v-if="account && account.isLoggedIn" class="navbar-link profile-link" to="/profile" >
+                                <img :src="account && account.avatar" class="profile-img"/>
                                 Profile
-                            </p>
+                            </router-link>
+                            <div v-else>
+                                <router-link class="navbar-link" to="/login" style="margin-right: 4px">Login</router-link>
+                                <router-link class="navbar-link" to="/register">Register</router-link>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -46,14 +49,24 @@
 </template>
 
 <script>
-    import Logo from "../assets/logo.png"
+    import Logo from "../assets/Logo.png"
 
     export default {
         data: function() {
             return {
+                account: null,
                 image: Logo,
                 isMenuOpened: false,
             }
+        },
+        beforeMount: function(){
+            const that = this;
+
+            this.$store.watch(function(state) {
+                return state.account
+            }, function(state) {
+                that.account = state.account;
+            }, { deep: true })
         },
         methods: {
             Menu: function() {
@@ -79,7 +92,7 @@
         margin: 0 auto;
     }
 
-    .navbar .navbar-alignment > .navbar-content {
+    .navbar .navbar-alignment .navbar-content {
         width: 100%;
         position: relative;
         display: flex;
@@ -106,7 +119,8 @@
     }
 
     .navbar-item > .navbar-logo {
-        width: 140px
+        width: 60px;
+        height: 60px;
     }
 
     .navbar-links {
@@ -116,7 +130,7 @@
         justify-content: flex-end;
     }
 
-    .navbar-links > .navbar-link {
+    .navbar-links .navbar-link {
         margin: 0 8px;
         font-size: 18px;
         font-weight: 600;
@@ -127,7 +141,7 @@
 
     }
 
-    .navbar-links > .navbar-link.active {
+    .navbar-links .navbar-link.router-link-active {
         border-color: #26A96C;
     }  
 
@@ -169,10 +183,13 @@
         padding: 10px;
         background: white;
         box-shadow: 0px 0px 10px -3px rgba(0,0,0,1);
-        color: black
+        color: black;
+
+        display: flex;
+        flex-direction: column;
     }
 
-    .mobile-menu > p {
+    .mobile-menu a {
         margin-bottom: 6px;
         cursor: pointer;
         font-size: 18px;

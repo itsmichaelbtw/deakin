@@ -1,19 +1,20 @@
 <template>
-    <div class="result-block">
-        <div class="result-image">
-            <img :src="image" class="image"/>
+    <router-link :to="url">
+        <div class="result-block">
+            <div class="result-image">
+                <img :src="banner" class="image"/>
+            </div>
+            <div class="result-text">
+                <h1 class="room">Room: {{ name }}</h1>
+                <h1 class="duration">Duration: {{ duration }}</h1>
+            </div>
         </div>
-        <div class="result-text">
-            <h1 class="room">Room: {{ room }}</h1>
-            <h1 class="duration">Duration: {{ duration }}</h1>
-            <h1 class="host">Host: {{ host }}</h1>
-        </div>
-    </div>
+    </router-link>
 </template>
 
 <script>
     export default {
-        props: ["room", "image", "duration", "host"]
+        props: ["id", "name", "duration", "environment", "banner", "link", "url"]
     }
 </script>
 
